@@ -1,0 +1,36 @@
+opp_ID,opp_name,in_adx_ID,in_adx_placement,out_adx_ID
+013,Kid Gohan,-1,1st,2
+014,Teen Gohan,11,1st,2
+015,Teen Gohan - Super Saiyan,11,1st,2
+016,Teen Gohan - Super Saiyan 2,11,1st,2
+025,Krillin,9,1st,-1
+031,Vegeta,6,2nd,-1
+032,Vegeta - Super Saiyan,6,2nd,-1
+033,Super Vegeta,6,2nd,-1
+034,Vegeta (second form),6,2nd,-1
+035,Vegeta (second form) - Super Saiyan,6,2nd,-1
+036,Vegeta (second form) - Super Saiyan 2,6,2nd,-1
+068,Grandpa Gohan,-1,1st,3
+086,Ginyu,3,2nd,-1
+087,Recoome,1,1st,-1
+088,Burter,2,2nd,-1
+091,Frieza - 1st Form,4,1st,0
+092,Frieza - 2nd Form,4,1st,0
+093,Frieza - 3rd Form,4,1st,0
+094,Frieza - Final Form,4,1st,0
+095,Frieza - Full Power,4,1st,0
+096,Mecha Frieza,8,2nd,1
+100,Android #16,7,2nd,-1
+107,Cell - Perfect Form,10,2nd,-1
+108,Cell - Perfect,10,2nd,-1
+123,Slug,12,2nd,-1
+124,Slug - Giant,12,2nd,-1
+126,Cooler,5,1st,0
+127,Cooler - Final Form,5,1st,0
+128,Meta-Cooler,-1,1st,0
+129,Android #13,12,2nd,-1
+130,Android #13 - Fusion,12,2nd,-1
+133,Broly - Legendary Super Saiyan,0,2nd,-1
+157,Chi-Chi,13,2nd,4
+159,Future Gohan,14,2nd,5
+160,Future Gohan - Super Saiyan,14,2nd,5

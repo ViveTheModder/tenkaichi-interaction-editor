@@ -1,0 +1,49 @@
+opp_ID,opp_name,in_adx_ID,in_adx_placement,out_adx_ID
+013,Kid Gohan,-1,1st,2
+014,Teen Gohan,-1,1st,2
+015,Teen Gohan - Super Saiyan,-1,1st,2
+016,Teen Gohan - Super Saiyan 2,-1,1st,2
+017,Adult Gohan,13,1st,3
+018,Adult Gohan - Super Saiyan,13,1st,3
+019,Adult Gohan - Super Saiyan 2,13,1st,3
+020,Great Saiyaman,13,1st,3
+021,Ultimate Gohan,13,1st,3
+025,Krillin,8,1st,-1
+031,Vegeta,6,2nd,7
+032,Vegeta - Super Saiyan,6,2nd,7
+033,Super Vegeta,6,2nd,7
+034,Vegeta (second form),6,2nd,7
+035,Vegeta (second form) - Super Saiyan,6,2nd,7
+036,Vegeta (second form) - Super Saiyan 2,6,2nd,7
+037,Vegeta (End) - Majin,9,1st,-1
+048,Gotenks,14,2nd,1
+049,Gotenks - Super Saiyan,14,2nd,1
+050,Gotenks - Super Saiyan 3,14,2nd,1
+061,Pikkon,15,2nd,7
+063,Pan,12,1st,6
+064,Uub,16,1st,5
+065,Majuub,16,1st,5
+068,Grandpa Gohan,17,1st,4
+091,Frieza - 1st Form,-1,1st,0
+092,Frieza - 2nd Form,-1,1st,0
+093,Frieza - 3rd Form,-1,1st,0
+094,Frieza - Final Form,-1,1st,0
+095,Frieza - Full Power,-1,1st,0
+096,Mecha Frieza,5,2nd,0
+100,Android #16,7,2nd,-1
+107,Cell - Perfect Form,2,2nd,-1
+108,Cell - Perfect,2,2nd,-1
+112,Majin Buu,0,2nd,-1
+117,Kid Buu,18,2nd,8
+121,Turles,11,1st,-1
+126,Cooler,3,2nd,-1
+127,Cooler - Final Form,3,2nd,-1
+128,Meta-Cooler,5,2nd,-1
+129,Android #13,14,2nd,-1
+130,Android #13 - Fusion,14,2nd,-1
+131,Broly,10,2nd,-1
+132,Broly - Super Saiyan,10,2nd,-1
+133,Broly - Legendary Super Saiyan,4,2nd,-1
+135,Bojack,11,1st,-1
+136,Bojack - Full Power,11,1st,-1
+138,Super Janemba,1,1st,-1

@@ -1,0 +1,50 @@
+opp_ID,opp_name,in_adx_ID,in_adx_placement,out_adx_ID
+000,Goku (Early),5,2nd,-1
+022,Piccolo (Early),2,1st,0
+023,Piccolo (End),2,1st,0
+025,Krillin,4,1st,-1
+026,Yamcha,6,1st,5
+027,Tien,7,1st,-1
+029,Vegeta (Scouter),12,1st,2
+031,Vegeta,12,1st,2
+032,Vegeta - Super Saiyan,12,1st,2
+033,Super Vegeta,12,1st,2
+034,Vegeta (second form),12,1st,2
+035,Vegeta (second form) - Super Saiyan,12,1st,2
+036,Vegeta (second form) - Super Saiyan 2,12,1st,2
+044,Kid Trunks,13,2nd,4
+045,Kid Trunks - Super Saiyan,13,2nd,4
+046,Goten,3,1st,4
+047,Goten - Super Saiyan,3,1st,4
+055,Hercule,11,1st,3
+060,Yajirobe,19,2nd,-1
+063,Pan,18,2nd,7
+066,Master Roshi,0,1st,6
+067,Master Roshi - MAX Power,16,1st,6
+068,Grandpa Gohan,17,1st,6
+069,Nam,0,1st,-1
+070,Android #8,0,1st,-1
+073,Bardock,8,2nd,1
+075,Fasha,14,2nd,-1
+091,Frieza - 1st Form,9,1st,-1
+092,Frieza - 2nd Form,9,1st,-1
+093,Frieza - 3rd Form,9,1st,-1
+094,Frieza - Final Form,9,1st,-1
+095,Frieza - Full Power,9,1st,-1
+096,Mecha Frieza,9,1st,-1
+112,Majin Buu,10,2nd,-1
+121,Turles,14,1st,-1
+131,Broly,-1,1st,1
+132,Broly - Super Saiyan,-1,1st,1
+133,Broly - Legendary Super Saiyan,8,2nd,1
+146,Syn Shenron,15,1st,-1
+147,Omega Shenron,15,1st,-1
+148,General Tao,1,1st,0
+150,General Blue,21,1st,0
+151,Devilman,12,1st,-1
+152,Pilaf Machine,1,2nd,0
+153,Pilaf Machine - Fusion,1,2nd,0
+154,Tambourine,20,1st,0
+155,Demon King Piccolo,1,2nd,0
+156,Arale,22,1st,9
+157,Chi-Chi,23,2nd,8
