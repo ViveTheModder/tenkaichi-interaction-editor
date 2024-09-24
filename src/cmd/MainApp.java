@@ -24,16 +24,18 @@ public class MainApp
 	+ "* -delpreall\nDisable all pre-battle Special Quotes.\n"
 	+ "* -delpostall\nDisable all post-battle Special Quotes.\n"
 	+ "* -delall\nDisable all Special Quotes.\n"
-	+ "* -wpre [chara_ID] [ADX_ID] [1st_or_2nd]\nAssign a pre-battle Special Quote against a given character.\n"
-	+ "* -wpost [chara_ID] [ADX_ID]\nAssign a post-battle Special Quote against a given character.\n"
-	+ "* -wpreall [ADX_ID]\nAssign a pre-battle Special Quote against all characters.\n"
-	+ "* -wpostall [ADX_ID]\nAssign a post-battle Special Quote against all characters.\n";
+	+ "* -wpre [chara_ID] [quote_ID] [1st_or_2nd]\nAssign a pre-battle Special Quote against a given character.\n"
+	+ "* -wpost [chara_ID] [quote_ID]\nAssign a post-battle Special Quote against a given character.\n"
+	+ "* -wpreall [quote_ID]\nAssign a pre-battle Special Quote against all characters.\n"
+	+ "* -wpostall [quote_ID]\nAssign a post-battle Special Quote against all characters.\n";
 	
 	public static String readDAT() throws IOException
 	{
-		//default parameters for two Special Quotes (pre-battle ADX ID, who talks first, post-battle ADX ID)
+		//change character count to 256 if the DAT file is from BT4 (given that file size is >704 bytes)
+		if (param.length()==1040) charaCnt=256;
+		//default parameters for two Special Quotes (pre-battle quote ID, who talks first, post-battle quote ID)
 		byte[] specialQuoteParams = new byte[3];
-		String output="opp_ID,opp_name,in_adx_ID,in_adx_placement,out_adx_ID\n"; //initialized with CSV header
+		String output="opp_ID,opp_name,in_quote_ID,in_quote_placement,out_quote_ID\n"; //initialized with CSV header
 		for (int i=0; i<charaCnt; i++)
 		{
 			param.seek(i*4);
@@ -69,24 +71,24 @@ public class MainApp
 		}
 		sc.close();
 	}
-	public static void writeDAT(int charaID, int adxID, boolean isSecond) throws IOException
+	public static void writeDAT(int charaID, int quoteID, boolean isSecond) throws IOException
 	{
-		byte adxPlacement=0; int iterations=charaCnt, pos=-1, step=4;
+		byte quotePlacement=0; int iterations=charaCnt, pos=-1, step=4;
 		if (additionalArgs[0] || additionalArgs[2]) pos=0;
 		if (additionalArgs[1]) pos=2;
 		if (additionalArgs[2])
 		{
 			step=2; iterations=charaCnt*2; //for-loop would end too early if I didn't multiply
 		}
-		if (isSecond) adxPlacement=1;
+		if (isSecond) quotePlacement=1;
 		
 		for (int i=0; i<iterations; i++)
 		{
 			param.seek(pos);
 			if (i==charaID || additionalArgs[2]) 
 			{
-				param.writeByte((byte)adxID);
-				param.writeByte(adxPlacement);
+				param.writeByte((byte)quoteID);
+				param.writeByte(quotePlacement);
 			}
 			//skip every two bytes starting from zero (to only overwrite pre-battle quote params)
 			if (additionalArgs[0] && i%2==0) additionalArgs[2]=false;
@@ -161,28 +163,38 @@ public class MainApp
 			}
 			if (hasWriteArg)
 			{
-				boolean isSecond=false; int adxID=0, charaID=0;
+				boolean isSecond=false; int quoteID=0, charaID=0;
 				if (args.length!=3 && additionalArgs[0])
 				{
-					System.out.println("Missing arguments, if not too many! Must only contain character ID, ADX ID and placement (1st or 2nd)."); 
+					System.out.println("Missing arguments, if not too many! Must only contain character ID, quote ID and placement (1st or 2nd)."); 
 					System.exit(4);
 				}
 				if (args.length!=2 && additionalArgs[1])
 				{
-					System.out.println("Missing arguments, if not too many! Must only contain character ID and ADX ID."); 
+					System.out.println("Missing arguments, if not too many! Must only contain character ID and quote ID."); 
 					System.exit(4);
 				}
 				if (args.length!=1 && additionalArgs[2])
 				{
-					System.out.println("Missing arguments, if not too many! Must only contain ADX ID."); 
+					System.out.println("Missing arguments, if not too many! Must only contain quote ID."); 
 					System.exit(4);
 				}
 				
 				if (args[3].equals("2nd")) isSecond=true;
 				charaID = Integer.parseInt(args[1]);
-				adxID = Integer.parseInt(args[2]);
+				quoteID = Integer.parseInt(args[2]);
+				if (charaID<0 || charaID>charaCnt)
+				{
+					System.out.println("Invalid character ID! It must be between 0 and "+charaCnt+".");
+					System.exit(5);
+				}
+				if (quoteID<0 || quoteID>93)
+				{
+					System.out.println("Invalid quote ID! It must be between 0 and 93, although it is not recommended to exceed 40.");
+					System.exit(6);
+				}
 				System.out.print("Assigning Special Quotes to "+fileName+"... ");
-				writeDAT(charaID,adxID,isSecond);
+				writeDAT(charaID,quoteID,isSecond);
 			}
 			endForDAT = System.currentTimeMillis();
 			double timeForDAT= (endForDAT-startForDAT)/1000;

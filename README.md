@@ -16,7 +16,11 @@ This tool requires Java SE 8 or higher, and is command-line only. Here are all t
 * -delpreall --> Disable all pre-battle Special Quotes.
 * -delpostall --> Disable all post-battle Special Quotes.
 * -delall --> Disable all Special Quotes.
-* -wpre [chara_ID] [ADX_ID] [1st_or_2nd] --> Assign a pre-battle Special Quote against a given character.
-* -wpost [chara_ID] [ADX_ID] --> Assign a post-battle Special Quote against a given character.
-* -wpreall [ADX_ID] --> Assign a pre-battle Special Quote against all characters.
-* -wpostall [ADX_ID] --> Assign a post-battle Special Quote against all characters.
+* -wpre [chara_ID] [quote_ID] [1st_or_2nd] --> Assign a pre-battle Special Quote against a given character.
+* -wpost [chara_ID] [quote_ID] --> Assign a post-battle Special Quote against a given character.
+* -wpreall [quote_ID] --> Assign a pre-battle Special Quote against all characters.
+* -wpostall [quote_ID] --> Assign a post-battle Special Quote against all characters.
+
+To clarify, the character ID ranges from 0 to 161, while the quote ID ranges from 0 to 93 (although exceeding 40 is not recommended).
+
+To determine the quote ID, just take the ID (noted in `XX`) of the ADX you wanna play (chara_5`XX`_YY.adx) and subtract 6.
