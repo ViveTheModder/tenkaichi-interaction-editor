@@ -1,5 +1,5 @@
 package cmd;
-//Tenkaichi Interaction Editor v1.1 by ViveTheModder
+//Tenkaichi Interaction Editor v1.1.1 by ViveTheModder
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -83,6 +83,17 @@ public class MainApp
 	}
 	public static void writeDAT(int charaID, int quoteID, boolean isSecond) throws IOException
 	{
+		//change character count to 256 if the DAT file is from BT4 (given that file size is >704 bytes)
+		if (!isBT4file && param.length()==1040) 
+		{
+				isBT4file=true; charaCnt=256;
+				charaNames = new String[charaCnt];
+				charaNamesCSV = new File(CSV_PATH+"characters-bt4.csv");
+				setCharaNames(charaNamesCSV);
+		}
+		//no reset is performed, meaning every other DAT file in the older is assumed to be from BT4
+		if (isBT4file && param.length()==704) return;
+				
 		byte quotePlacement=0; int iterations=charaCnt, pos=-1, step=4;
 		if (additionalArgs[0] || additionalArgs[2]) pos=0;
 		if (additionalArgs[1]) pos=2;
@@ -179,17 +190,17 @@ public class MainApp
 			if (hasWriteArg)
 			{
 				boolean isSecond=false; int quoteID=0, charaID=0;
-				if (args.length!=3 && additionalArgs[0])
+				if (args.length!=4 && additionalArgs[0])
 				{
 					System.out.println("Missing arguments, if not too many! Must only contain character ID, quote ID and placement (1st or 2nd)."); 
 					System.exit(4);
 				}
-				if (args.length!=2 && additionalArgs[1])
+				if (args.length!=3 && additionalArgs[1])
 				{
 					System.out.println("Missing arguments, if not too many! Must only contain character ID and quote ID."); 
 					System.exit(4);
 				}
-				if (args.length!=1 && additionalArgs[2])
+				if (args.length!=2 && additionalArgs[2])
 				{
 					System.out.println("Missing arguments, if not too many! Must only contain quote ID."); 
 					System.exit(4);
