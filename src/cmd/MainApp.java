@@ -1,5 +1,5 @@
 package cmd;
-//Tenkaichi Interaction Editor v1.0 by ViveTheModder
+//Tenkaichi Interaction Editor v1.1 by ViveTheModder
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,12 +9,14 @@ import java.util.Scanner;
 public class MainApp 
 {
 	static boolean[] additionalArgs = new boolean[3]; //order: pre, post, all
+	static boolean isBT4file=false;
 	static RandomAccessFile param;
 	static int charaCnt = 161;
 	static String[] charaNames = new String[charaCnt];
 	static final String CSV_PATH = "./csv/";
 	static final String DAT_PATH = "./dat/";
 	static final String OUT_PATH = "./out/";
+	static File charaNamesCSV = new File(CSV_PATH+"characters.csv");
 	static final String HELP_TEXT =
 	"Read and write contents of voice_speaker.dat files, which handle Special Interactions in Budokai Tenkaichi 3.\n"
 	+ "Here is a list of all the arguments that can be used. Use -h or -help to print this out again.\n\n"
@@ -32,7 +34,15 @@ public class MainApp
 	public static String readDAT() throws IOException
 	{
 		//change character count to 256 if the DAT file is from BT4 (given that file size is >704 bytes)
-		if (param.length()==1040) charaCnt=256;
+		if (!isBT4file && param.length()==1040) 
+		{
+			isBT4file=true; charaCnt=256;
+			charaNames = new String[charaCnt];
+			charaNamesCSV = new File(CSV_PATH+"characters-bt4.csv");
+			setCharaNames(charaNamesCSV);
+		}
+		//no reset is performed, meaning every other DAT file in the older is assumed to be from BT4
+		if (isBT4file && param.length()==704) return null;
 		//default parameters for two Special Quotes (pre-battle quote ID, who talks first, post-battle quote ID)
 		byte[] specialQuoteParams = new byte[3];
 		String output="opp_ID,opp_name,in_quote_ID,in_quote_placement,out_quote_ID\n"; //initialized with CSV header
@@ -132,7 +142,7 @@ public class MainApp
 		if (args[0].contains("pre")) additionalArgs[0]=true;
 		if (args[0].contains("post")) additionalArgs[1]=true;
 		if (args[0].contains("all")) additionalArgs[2]=true;
-		if (hasReadArg) setCharaNames(new File(CSV_PATH+"characters.csv"));
+		if (hasReadArg) setCharaNames(charaNamesCSV);
 		
 		for (int datIndex=0; datIndex<datFiles.length; datIndex++)
 		{
@@ -146,6 +156,11 @@ public class MainApp
 				outputCSV = new File(OUT_PATH+fileName.replace(".dat", ".csv"));
 				fw = new FileWriter(outputCSV);
 				output = readDAT();
+				if (output.length()==0) 
+				{
+					System.out.println("nevermind, time to skip!");
+					continue;
+				}
 				fw.write(output);
 				fw.close();
 			}
