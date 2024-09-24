@@ -13,6 +13,7 @@ public class MainApp
 	static RandomAccessFile param;
 	static int charaCnt = 161;
 	static String[] charaNames = new String[charaCnt];
+	static final int[] ARG_COUNTS = {4,3,2};
 	static final String CSV_PATH = "./csv/";
 	static final String DAT_PATH = "./dat/";
 	static final String OUT_PATH = "./out/";
@@ -86,10 +87,10 @@ public class MainApp
 		//change character count to 256 if the DAT file is from BT4 (given that file size is >704 bytes)
 		if (!isBT4file && param.length()==1040) 
 		{
-				isBT4file=true; charaCnt=256;
-				charaNames = new String[charaCnt];
-				charaNamesCSV = new File(CSV_PATH+"characters-bt4.csv");
-				setCharaNames(charaNamesCSV);
+			isBT4file=true; charaCnt=256;
+			charaNames = new String[charaCnt];
+			charaNamesCSV = new File(CSV_PATH+"characters-bt4.csv");
+			setCharaNames(charaNamesCSV);
 		}
 		//no reset is performed, meaning every other DAT file in the older is assumed to be from BT4
 		if (isBT4file && param.length()==704) return;
@@ -125,7 +126,7 @@ public class MainApp
 	}
 	public static void main(String[] args) throws IOException 
 	{
-		boolean hasReadArg=false, hasDelArg=false, hasWriteArg=false;
+		boolean hasArgError=false, hasReadArg=false, hasDelArg=false, hasWriteArg=false;
 		double endForDAT, startForDAT, time=0;
 		File folder = new File(DAT_PATH), outputCSV;
 		File[] paths = folder.listFiles((dir, name) -> (name.toLowerCase().endsWith(".dat") && name.toLowerCase().contains("voice_speaker")));
@@ -137,7 +138,7 @@ public class MainApp
 			System.out.println("No voice_speaker.dat files have been detected! Check file names and/or extensions.");
 			System.exit(1);
 		}
-		//check for arguments
+		//check for lack of arguments
 		if (args.length==0)
 		{
 			System.out.println("No arguments have been provided! Have fun reading all this:\n"); 
@@ -153,7 +154,37 @@ public class MainApp
 		if (args[0].contains("pre")) additionalArgs[0]=true;
 		if (args[0].contains("post")) additionalArgs[1]=true;
 		if (args[0].contains("all")) additionalArgs[2]=true;
+		
+		boolean isSecond=false; int quoteID=0, charaID=0;
 		if (hasReadArg) setCharaNames(charaNamesCSV);
+		if (hasDelArg)
+		{
+			if (args.length!=2 && !additionalArgs[2])
+			{
+				System.out.println("Missing, if not too many arguments!");
+				System.exit(3);
+			}
+		}
+		if (hasWriteArg)
+		{
+			for (int argCnt=0; argCnt<additionalArgs.length; argCnt++)
+			{
+				if (additionalArgs[argCnt])
+				{
+					if (args.length==ARG_COUNTS[argCnt]) hasArgError=false;
+					else hasArgError=true;
+					if (hasArgError) 
+					{
+						System.out.println("Missing, if not too many arguments!"); System.exit(4);
+					}
+				}
+			}
+			
+			if (additionalArgs[0] && !additionalArgs[2] && args[3].equals("2nd")) isSecond=true;
+			if (!additionalArgs[2]) charaID = Integer.parseInt(args[1]);
+			if (!additionalArgs[2]) quoteID = Integer.parseInt(args[2]);
+			else quoteID = Integer.parseInt(args[1]);
+		}
 		
 		for (int datIndex=0; datIndex<datFiles.length; datIndex++)
 		{
@@ -177,38 +208,13 @@ public class MainApp
 			}
 			if (hasDelArg)
 			{
-				int charaID=0;
+				charaID=0;
 				if (args.length==2) charaID=Integer.parseInt(args[1]);
-				if (args.length!=2 && !additionalArgs[2])
-				{
-					System.out.println("Missing arguments, if not too many! Must only contain character ID.");
-					System.exit(3);
-				}
 				System.out.print("Disabling Special Quotes from "+fileName+"... ");
 				writeDAT(charaID,0xFF,false);	
 			}
 			if (hasWriteArg)
 			{
-				boolean isSecond=false; int quoteID=0, charaID=0;
-				if (args.length!=4 && additionalArgs[0])
-				{
-					System.out.println("Missing arguments, if not too many! Must only contain character ID, quote ID and placement (1st or 2nd)."); 
-					System.exit(4);
-				}
-				if (args.length!=3 && additionalArgs[1])
-				{
-					System.out.println("Missing arguments, if not too many! Must only contain character ID and quote ID."); 
-					System.exit(4);
-				}
-				if (args.length!=2 && additionalArgs[2])
-				{
-					System.out.println("Missing arguments, if not too many! Must only contain quote ID."); 
-					System.exit(4);
-				}
-				
-				if (args[3].equals("2nd")) isSecond=true;
-				charaID = Integer.parseInt(args[1]);
-				quoteID = Integer.parseInt(args[2]);
 				if (charaID<0 || charaID>charaCnt)
 				{
 					System.out.println("Invalid character ID! It must be between 0 and "+charaCnt+".");
