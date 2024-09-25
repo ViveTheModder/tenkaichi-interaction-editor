@@ -1,7 +1,7 @@
 # tenkaichi-interaction-editor
 Tenkaichi Interaction Editor is a tool that can read and write contents of voice_speaker.dat files.
 
-Said files are found in the character's costume PAK files. They start at byte 84's offset and end at byte 88's offset.
+Said files are found in the character's costume PAK files. They start at byte 88's offset and end at byte 92's offset.
 
 Their contents handle Special Interactions in Budokai Tenkaichi 3.
 
@@ -23,4 +23,6 @@ This tool requires Java SE 8 or higher, and is command-line only. Here are all t
 
 To clarify, the character ID ranges from 0 to 161, while the quote ID ranges from 0 to 93 (although exceeding 40 is not recommended).
 
-To determine the quote ID, just take the ID (noted in `XX`) of the ADX you wanna play (chara_5`XX`_YY.adx) and subtract 6.
+To determine the pre-battle quote ID, just take the ID (noted in `XX`) of the ADX you wanna play (chara_5`XX`_YY.adx) and subtract 6.
+
+To determine the post-battle quote ID, just take the ID (noted in `XX`) of the ADX you wanna play (chara_5`XX`_YY.adx) and subtract 30.
