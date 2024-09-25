@@ -1,5 +1,5 @@
 package cmd;
-//Tenkaichi Interaction Editor v1.1.1 by ViveTheModder
+//Tenkaichi Interaction Editor v1.2 by ViveTheModder
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -107,21 +107,25 @@ public class MainApp
 		for (int i=0; i<iterations; i++)
 		{
 			param.seek(pos);
-			if (i==charaID || additionalArgs[2]) 
+			if (additionalArgs[2])
+			{
+				charaID=666; //set character ID to impossible value to bypass next if condition
+				param.writeByte((byte)quoteID);
+				if (quoteID==0xFF) param.writeByte(0);
+				else param.readByte();
+				pos+=step; //increment position to skip every two bytes
+			}
+			if (i==charaID) 
 			{
 				param.writeByte((byte)quoteID);
 				param.writeByte(quotePlacement);
+				return;
 			}
-			//skip every two bytes starting from zero (to only overwrite pre-battle quote params)
-			if (additionalArgs[0] && i%2==0) additionalArgs[2]=false;
-			else additionalArgs[2]=true;
-			//skip every two bytes starting from two (to only overwrite post-battle quote params)
-			if (additionalArgs[1] && i%2==0) additionalArgs[2]=false;
-			else additionalArgs[2]=true;
+			
 			//adjust position based on additional argument suffixes (2 for all, 4 for pre or post)
 			pos+=step;
 			//to prevent endless writing, here's my own EOF """exception"""
-			if (pos==charaCnt*4) return;
+			if (pos>=charaCnt*4) return;
 		}
 	}
 	public static void main(String[] args) throws IOException 
@@ -173,11 +177,11 @@ public class MainApp
 				{
 					if (args.length==ARG_COUNTS[argCnt]) hasArgError=false;
 					else hasArgError=true;
-					if (hasArgError) 
-					{
-						System.out.println("Missing, if not too many arguments!"); System.exit(4);
-					}
 				}
+			}
+			if (hasArgError) 
+			{
+				System.out.println("Missing, if not too many arguments!"); System.exit(4);
 			}
 			
 			if (additionalArgs[0] && !additionalArgs[2] && args[3].equals("2nd")) isSecond=true;
